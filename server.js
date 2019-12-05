@@ -1,29 +1,29 @@
-require("dotenv").config(); // parse .env file
+require("dotenv").config();
 require("./config/mongo");
 
-const express = require("express"); // really needed
-const server = express(); // create the server with the express function
-const cors = require("cors"); // create the server with the express function
+const express = require("express");
+const server = express();
+const cors = require("cors");
 
-// we n eed to parse json body in HTTP requests
-// this middleware exactly does that : )
 server.use(express.json());
 
-// authorize ajax call from specified clients
 server.use(cors("*"));
 
 server.get("/", (req, res) => {
-  // setup a nase route ...
-  res.send("ok poto"); // sending back a simple string as a response for each request on http://localhost:9000/
+  res.send("ok poto");
 });
 
-// // ROUTING
-// const studentsRouter = require("./routes/students");
-// const cohortsRouter = require("./routes/cohorts");
+// ROUTING
+const orderRouter = require("./routes/order");
+const foodRouter = require("./routes/food");
+const tagRouter = require("./routes/tag");
+const userRouter = require("./routes/user");
 
-// server.use(studentsRouter);
-// server.use(cohortsRouter);
+server.use(orderRouter);
+server.use(foodRouter);
+server.use(tagRouter);
+server.use(userRouter);
 
-// server.listen(process.env.PORT, () => {
-//     console.log("simple-backend started @ http://localhost:" + process.env.PORT)
-// }); // access .env key/values
+server.listen(process.env.PORT, () => {
+  console.log("simple-backend started @ http://localhost:" + process.env.PORT);
+});
