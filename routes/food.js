@@ -51,7 +51,7 @@ router.delete("/delete-food/:id", (req, res) => {
 });
 
 //UPDATE ONE MEAL
-router.patch("edit-food/:id", (req, res) => {
+router.patch("/edit-food/:id", (req, res) => {
   foodModel
     .findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then(dbRes => {

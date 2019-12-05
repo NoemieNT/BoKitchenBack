@@ -17,7 +17,6 @@ router.post("/signup", (req, res) => {
         const salt = bcrypt.genSaltSync(10);
         const hashed = bcrypt.hashSync(req.body.password, salt);
         req.body.password = hashed;
-
         userModel.create(req.body).then(result => {
           req.session.user = result;
           console.log("success", "Welcome");

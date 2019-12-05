@@ -2,10 +2,10 @@ const express = require("express");
 const router = new express.Router();
 const orderModel = require("./../models/Order");
 
-//DISPLAY ALL THE ORDER RELATED TO THE CUSTOMER
-router.get("/orders", (req, res) => {
+//CLIENT - DISPLAY ALL THE ORDER RELATED TO THE CUSTOMER
+router.get("/customer-orders", (req, res) => {
   orderModel
-    // .find({ _id: {req.session.user} })
+    .find({ customer: req.session.user })
     .then(dbRes => {
       res.status(200).json(dbRes);
     })
@@ -14,10 +14,10 @@ router.get("/orders", (req, res) => {
     });
 });
 
-//DISPLAY ALL THE ORDER RELATED TO A KITCHEN
-router.get("/orders", (req, res) => {
+//LIVREUR - DISPLAY ALL THE ORDER RELATED TO THE DELIVERER
+router.get("/deliverer-orders", (req, res) => {
   orderModel
-    .find({ kitchen: req.body.kitchen })
+    .find({ deliverer: req.session.user })
     .then(dbRes => {
       res.status(200).json(dbRes);
     })
@@ -26,10 +26,22 @@ router.get("/orders", (req, res) => {
     });
 });
 
-//DISPLAY ALL THE ORDER TO BE DELIVER RELATED TO A KITCHEN
-router.get("/orders", (req, res) => {
+//ADMIN - DISPLAY ALL THE ORDER (A fAIRE : FILTRE SUR KITCHEN ET STATUS)
+router.get("/all-orders", (req, res) => {
   orderModel
-    .find({ kitchen: req.body.kitchen, status: "TO BE DELIVER" })
+    .find()
+    .then(dbRes => {
+      res.status(200).json(dbRes);
+    })
+    .catch(dbErr => {
+      res.status(500).json(dbErr);
+    });
+});
+
+//LIVREUR - DISPLAY ALL THE ORDER TO BE DELIVERED (A fAIRE : FILTRE SUR KITCHEN)
+router.get("/validated-orders", (req, res) => {
+  orderModel
+    .find({ status: "VALIDATED" })
     .then(dbRes => {
       res.status(200).json(dbRes);
     })
@@ -62,28 +74,10 @@ router.delete("/delete-order/:id", (req, res) => {
     });
 });
 
-//UPDATE ONE ORDER (ATTRIBUTION D'UN LIVREUR)
-router.patch("edit-order/:id", (req, res) => {
-  let deliverer = req.session.user;
+//UPDATE ONE ORDER (ATTRIBUTION D'UN LIVREUR / CHANGEMENT DE STATUS)
+router.patch("/edit-order/:id", (req, res) => {
   orderModel
-    .findByIdAndUpdate(
-      req.params.id,
-      { deliverer: deliverer, status: "TO BE DELIVER" },
-      { new: true }
-    )
-    .then(dbRes => {
-      res.status(200).send(dbRes);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).send(err);
-    });
-});
-
-//UPDATE ONE ORDER (MODIF STATUT : DELIVERED)
-router.patch("edit-order/:id", (req, res) => {
-  orderModel
-    .findByIdAndUpdate(req.params.id, { status: "DELIVERED" }, { new: true })
+    .findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then(dbRes => {
       res.status(200).send(dbRes);
     })
