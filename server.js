@@ -12,18 +12,18 @@ server.use(express.json());
 // authorize ajax call from specified clients
 server.use(cors("*"));
 
-
-server.get("/", (req, res) => { // setup a nase route ...
+server.get("/", (req, res) => {
+  // setup a nase route ...
   res.send("ok poto"); // sending back a simple string as a response for each request on http://localhost:9000/
 });
 
-// ROUTING
-const studentsRouter = require("./routes/students");
-const cohortsRouter = require("./routes/cohorts");
+// // ROUTING
+// const studentsRouter = require("./routes/students");
+// const cohortsRouter = require("./routes/cohorts");
 
-server.use(studentsRouter);
-server.use(cohortsRouter);
+// server.use(studentsRouter);
+// server.use(cohortsRouter);
 
-server.listen(process.env.PORT, () => {
-    console.log("simple-backend started @ http://localhost:" + process.env.PORT)
-}); // access .env key/values
+// server.listen(process.env.PORT, () => {
+//     console.log("simple-backend started @ http://localhost:" + process.env.PORT)
+// }); // access .env key/values
