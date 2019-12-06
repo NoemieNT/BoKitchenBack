@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const kitchenSchema = new Schema({
   name: String,
-  zone: [String]
+  zone: String
 });
 
 const kitchenModel = mongoose.model("Kitchen", kitchenSchema);
