@@ -1,6 +1,7 @@
 const express = require("express");
 const router = new express.Router();
 const orderModel = require("./../models/Order");
+const food = require("../models/Food");
 
 //CLIENT - DISPLAY ALL THE ORDER RELATED TO THE CUSTOMER
 router.get("/customer-orders", (req, res) => {
@@ -30,6 +31,7 @@ router.get("/deliverer-orders", (req, res) => {
 router.get("/all-orders", (req, res) => {
   orderModel
     .find()
+    .populate("food")
     .then(dbRes => {
       res.status(200).json(dbRes);
     })
