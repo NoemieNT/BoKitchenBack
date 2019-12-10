@@ -7,6 +7,9 @@ const bcrypt = require("bcrypt");
 
 //SIGN UP
 router.post("/signup", (req, res) => {
+  console.log("req.body");
+  console.log(req.body);
+
   userModel
     .findOne({ email: req.body.email })
     .then(dbRes => {
@@ -18,8 +21,10 @@ router.post("/signup", (req, res) => {
         const hashed = bcrypt.hashSync(req.body.password, salt);
         req.body.password = hashed;
         userModel.create(req.body).then(result => {
+          delete result.password;
           req.session.user = result;
           console.log("success", "Welcome");
+          res.status(200).json(result);
         });
       }
     })
