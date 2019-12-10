@@ -24,7 +24,8 @@ const orderSchema = new Schema({
   ],
   status: {
     type: String,
-    enum: ["VALIDATED", "IN DELIVERY", "DELIVERED"]
+    enum: ["VALIDATED", "IN DELIVERY", "DELIVERED"],
+    default: "VALIDATED"
   }
 });
 
