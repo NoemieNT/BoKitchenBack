@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 
 //SIGN UP
 router.post("/signup", (req, res) => {
-  // console.log("req.body");
+  console.log("req.body");
   // console.log(req.body);
   userModel
     .findOne({ email: req.body.email })
@@ -46,6 +46,13 @@ router.post("/signin", (req, res) => {
       console.log("error", "wrong credentials");
     }
   });
+});
+
+// LOG OUT
+router.get("/is-loggedin", (req, res) => {
+  if (req.session.currentUser)
+    return res.status(200).json(req.session.currentUser);
+  return res.status(403).json("Unauthorized access");
 });
 
 // LOG OUT
