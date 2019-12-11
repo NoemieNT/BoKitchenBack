@@ -31,8 +31,9 @@ router.get("/deliverer-orders", (req, res) => {
 router.get("/all-orders", (req, res) => {
   orderModel
     .find()
-    .populate("food")
+    .populate("details.food")
     .then(dbRes => {
+      console.log(dbRes);
       res.status(200).json(dbRes);
     })
     .catch(dbErr => {
