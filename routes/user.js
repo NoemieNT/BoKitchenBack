@@ -7,9 +7,8 @@ const bcrypt = require("bcrypt");
 
 //SIGN UP
 router.post("/signup", (req, res) => {
-  console.log("req.body");
-  console.log(req.body);
-
+  // console.log("req.body");
+  // console.log(req.body);
   userModel
     .findOne({ email: req.body.email })
     .then(dbRes => {
@@ -42,7 +41,7 @@ router.post("/signin", (req, res) => {
     } else {
       if (bcrypt.compareSync(req.body.password, dbRes.password)) {
         req.session.currentUser = dbRes;
-        console.log("success", "Welcome");
+        console.log("success", "Welcome", "You have signed in");
       }
       console.log("error", "wrong credentials");
     }
