@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect(process.env.MONGOLAB_ROSE_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
