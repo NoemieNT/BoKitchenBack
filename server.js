@@ -32,21 +32,6 @@ const corsOptions = {
 
 server.use(cors(corsOptions));
 
-// server.use(function fakeUserSession(req, res, next) {
-//   req.session.user = {
-//     _id: "5defcd044a3c2bda8e4556a6",
-//     role: "admin",
-//     firstname: "Noémie",
-//     lastname: "Nakab",
-//     email: "n@morocorocks.com",
-//     password: "12345",
-//     address: "100 rue Fake",
-//     zipcode: "75018",
-//     credits: 1000
-//   };
-//   next();
-// });
-
 server.get("/", (req, res) => {
   res.send("ok poto");
 });

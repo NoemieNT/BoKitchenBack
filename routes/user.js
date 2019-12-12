@@ -65,8 +65,7 @@ router.use("/is-loggedin", (req, res) => {
 // LOG OUT
 router.get("/logout", (req, res) => {
   req.session.destroy(err => {
-    res.locals.isLoggedIn = undefined;
-    res.redirect("/signin");
+    res.status(200).json("logged out");
   });
 });
 

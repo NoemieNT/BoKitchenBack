@@ -4,15 +4,29 @@ const orderModel = require("./../models/Order");
 const food = require("../models/Food");
 
 //CLIENT - DISPLAY ALL THE ORDER RELATED TO THE CUSTOMER
-router.get("/customer-orders/:id", (req, res) => {
-  orderModel
-    .find({ customer: req.params.id })
-    .then(dbRes => {
-      res.status(200).json(dbRes);
-    })
-    .catch(dbErr => {
-      res.status(500).json(dbErr);
-    });
+router.get("/current-order", async (req, res) => {
+  try {
+    const role = req.session.currentUser.role;
+    const result = await orderModel
+      .find({
+        [role.toLowerCase()]: req.session.currentUser._id,
+        status: { $ne: "DELIVERED" }
+      })
+      .populate("details.food");
+
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
+  // orderModel
+  //   .find({ _id: req.session. })
+  //   .then(dbRes => {
+  //     res.status(200).json(dbRes);
+  //   })
+  //   .catch(dbErr => {
+  //     res.status(500).json(dbErr);
+  //   });
 });
 
 //LIVREUR - DISPLAY ALL THE ORDER RELATED TO THE DELIVERER
