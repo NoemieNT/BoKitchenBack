@@ -5,6 +5,7 @@ const express = require("express");
 const server = express();
 const cors = require("cors");
 const session = require("express-session"); //sessions make data persist between http calls
+//sessions make data persist between http calls
 
 server.use(express.json());
 

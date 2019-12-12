@@ -4,9 +4,9 @@ const orderModel = require("./../models/Order");
 const food = require("../models/Food");
 
 //CLIENT - DISPLAY ALL THE ORDER RELATED TO THE CUSTOMER
-router.get("/customer-orders", (req, res) => {
+router.get("/customer-orders/:id", (req, res) => {
   orderModel
-    .find({ customer: req.session.user })
+    .find({ customer: req.params.id })
     .then(dbRes => {
       res.status(200).json(dbRes);
     })
