@@ -40,8 +40,10 @@ router.post("/signin", (req, res) => {
       console.log("error", "Wrong credentials");
     } else {
       if (bcrypt.compareSync(req.body.password, dbRes.password)) {
-        console.log("ici");
+        console.log("setting the user in session ");
         req.session.currentUser = dbRes;
+        console.log(req.session.currentUser);
+
         const forBrowser = dbRes.toJSON();
         delete forBrowser.password;
         console.log("success", "Welcome", "You have signed in");
@@ -58,7 +60,6 @@ router.get("/is-loggedin", (req, res) => {
   console.log("IS LOGGED IN ?", req.session.currentUser);
 
   if (req.session.currentUser) {
-    console.log("je suis current user");
     return res.status(200).json(req.session.currentUser);
   }
   return res.status(403).json("Unauthorized access");
