@@ -54,7 +54,7 @@ router.post("/signin", (req, res) => {
   });
 });
 
-router.use("/is-loggedin", (req, res) => {
+router.get("/is-loggedin", (req, res) => {
   console.log("IS LOGGED IN ?", req.session.currentUser);
 
   if (req.session.currentUser) {
